@@ -1,4 +1,4 @@
-<h1>Spamedar 📧</h1>
+<h1>Spamedar 📧</h1>  <img src="others/Logo.jpg" style="4px">
 <hr class="solid">
 Simple tool for detecting annoying Emails.
 
