@@ -6,7 +6,7 @@ Simple tool for detecting annoying Emails.
 ![Gradio Version](https://img.shields.io/badge/gradio-≥3.0-orange)
 ![Transformers Version](https://img.shields.io/badge/transformers-≥4.30-yellow)
 
-Spamedar is spam classification system using pre-trained BERT model with Gradio interface, supporting both single-text analysis and batch processing of emails.
+Spamedar is spam classification system using pre-trained BERT model with Gradio interface, supporting both single-text analysis and batch processing of emails. <a href="https://huggingface.co/spaces/raufjivad/spamedar">Demo</a>
 <a href="https://huggingface.co/spaces/raufjivad/spamedar">![Spam Classifier Demo](others/demo-screenshot.png)</a>
 
 ## Features ✨
@@ -34,6 +34,7 @@ Spamedar is spam classification system using pre-trained BERT model with Gradio 
 - #### Accuracy: 98.2% on validation set <br>
 - #### Inference Speed: 0.2s per email (CPU)
 
+<h5>⚙️ Build versions:</h5>
 gradio>=3.0
 transformers>=4.30
 torch>=2.0
