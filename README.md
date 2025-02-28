@@ -1,8 +1,7 @@
-<h1>Spamedar 📧</h1>  <img src="others/Logo.jpg" style="4px">
-<hr class="solid">
+<h1>Spamedar&nbsp&nbsp<img src="others/Logo.png" style="float:bottom;width:45px;height:px;"></h1> 
 Simple tool for detecting annoying Emails.
 
-![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white) 
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 [![Hugging Face Spaces](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue.svg)](https://huggingface.co/spaces/raufjivad/spamedar)
 ![Gradio Version](https://img.shields.io/badge/gradio-≥3.0-orange)
 ![Transformers Version](https://img.shields.io/badge/transformers-≥4.30-yellow)
