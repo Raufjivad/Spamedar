@@ -1,7 +1,10 @@
 import gradio as gr
 import transformers
 from transformers import pipeline
+import tf_keras as keras
+import pandas as pd
 import tempfile
+import os
 
 # Load pre-trained spam classifier
 spam_classifier = pipeline(
@@ -83,10 +86,11 @@ with gr.Blocks(title="Spam Classifier Pro") as demo:
                 ["Meeting rescheduled to Friday 2 PM"]
             ]
         )
-    
+    current_dir = os.getcwd()
     with gr.Tab("📨 Multiple Emails"):
         gr.Markdown("## Upload email batch (CSV or TXT)")
         file_input = gr.File(label="Upload File", file_types=[".csv", ".txt"])
+        clear_btn = gr.Button("Clear Selection", variant="secondary")
         output_table = gr.Dataframe(
             headers=["email", "label", "confidence"],
             datatype=["str", "str", "number"],
@@ -97,24 +101,50 @@ with gr.Blocks(title="Spam Classifier Pro") as demo:
 
         def process_file(file):
             """Process file and return (display_df, download_path)"""
-            results_df = classify_batch(file)
-            
-            with tempfile.NamedTemporaryFile(suffix=".csv", delete=False) as f:
-                results_df.to_csv(f.name, index=False)
-                return results_df, f.name
+            try:
+                if file is None:
+                    return pd.DataFrame(), None
+
+                results_df = classify_batch(file)
+                with tempfile.NamedTemporaryFile(suffix=".csv", delete=False) as f:
+                    results_df.to_csv(f.name, index=False)
+                    return results_df, f.name
+            except Exception as e:
+                raise gr.Error(f"Error processing file: {str(e)}")
+
+        def clear_selection():
+            ###clear file input and results function
+            return None, pd.DataFrame(), None
         
         file_input.upload(
             fn=process_file,
             inputs=file_input,
             outputs=[output_table, download_btn]  # Update both components
-    )
-        
-        gr.Examples(
-            examples=[
-                ["sample_emails.csv"],
-                ["batch_emails.txt"]
-            ],
-            inputs=file_input
         )
+
+        clear_btn.click(
+            fn=clear_selection,
+            outputs=[file_input, output_table, download_btn]
+        )
+
+        example_files= [
+            os.path.join(os.getcwd(), "sample_emails.csv"),
+            os.path.join(os.getcwd(), "batch_emails.txt"),
+        ]
+        if all(os.path.exists(f) for f in example_files):
+            gr.Examples(
+                examples=[[f] for f in example_files],
+                inputs=file_input,
+                outputs=[output_table, download_btn],
+                fn=process_file,
+                cache_examples=True,
+                label="Click any example below to test:"
+            )
+            
+        else:
+            print("Warning: Example files missing. Place these in your project root:")
+            print("- sample_emails.csv")
+            print("- batch_emails.txt")
+        
 if __name__ == "__main__":
     demo.launch(share=True)
